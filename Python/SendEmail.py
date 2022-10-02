@@ -18,6 +18,6 @@ from_address = email
 to_address = getpass.getpass("Enter the email of the recipient: ")
 subject = input("Enter the subject line: ")
 message = input("Type out the message you want to send: ")
-msg = "Subject: " + subject + '\n' + message
+msg = f"Subject: {subject}" + '\n' + message
 smtp_object.sendmail(from_address,to_address,msg)
 smtp_object.quit()

@@ -7,6 +7,7 @@ USAGE
  - Replace the <url> with the URL of your choice, for eg. 'python port_scanner.py 127.0.0.1'
 '''
 
+
 # Importing the libraries
 import pyfiglet
 import sys
@@ -25,8 +26,8 @@ else:
 	print("Invalid amount of Argument")
 
 print(" -" * 50)
-print(" Scanning Target: " + target)
-print(" Scanning started at: " + str(datetime.now()))
+print(f" Scanning Target: {target}")
+print(f" Scanning started at: {str(datetime.now())}")
 print(" -" * 50)
 
 try:
@@ -34,13 +35,13 @@ try:
 	for port in range(1, 65535):
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		socket.setdefaulttimeout(1)
-		
+
 		# Returns an error indicator
 		result = s.connect_ex((target,port))
 		if result == 0:
-			print("\nPort {} is open.".format(port))
+			print(f"\nPort {port} is open.")
 		s.close()
-		
+
 except KeyboardInterrupt:
 		print("\n Exiting Program.")
 		sys.exit()

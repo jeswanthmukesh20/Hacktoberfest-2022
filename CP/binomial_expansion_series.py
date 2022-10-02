@@ -42,18 +42,18 @@ def series(A, X, n):
 
     # calculating the value of n!
     nFact = factorial(n)
- 
+
     # loop to display the series
-    for i in range(0, n + 1):
-         
+    for i in range(n + 1):
+
         # For calculating the value of nCr
         niFact = factorial(n - i)
         iFact = factorial(i)
- 
+
         # calculating the value of A to the power k and X to the power k
         aPow = pow(A, n - i)
         xPow = pow(X, i)
- 
+
         # Display the series
         print (int((nFact * aPow * xPow) / (niFact * iFact)), end = " ")
      

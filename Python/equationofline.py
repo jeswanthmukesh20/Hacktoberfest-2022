@@ -15,15 +15,27 @@ m = int(input("Enter the slope: "))
 b = int(input("Enter the y-intercept: "))
 
 #Want to print y = mx + b
-if m == 0:
+if m == -1:
+	mOutput = "-x"
+
+	if b > 0:
+		bOutput = f"+{b}"
+
+	elif b == 0:
+		bOutput = ""
+
+	else:
+		bOutput = str(b)
+
+elif m == 0:
 	mOutput = ""
 	bOutput = str(b)
 
 elif m == 1:
 	mOutput = "x"
-	
+
 	if b > 0:
-		bOutput = "+" + str(b)
+		bOutput = f"+{b}"
 
 	elif b == 0:
 		bOutput = ""
@@ -31,23 +43,11 @@ elif m == 1:
 	else:
 		bOutput = str(b)
 
-elif m == -1:
-	mOutput = "-x"
-	
-	if b > 0:
-		bOutput = "+" + str(b)
-
-	elif b == 0:
-		bOutput = ""
-
-	else:
-		bOutput = str(b)
-
-else:  #For example, y = 3x + 8
-	mOutput = str(m) + "x"
+else:
+	mOutput = f"{m}x"
 
 	if b > 0:
-		bOutput = "+" + str(b)
+		bOutput = f"+{b}"
 
 	elif b == 0:
 		bOutput = ""

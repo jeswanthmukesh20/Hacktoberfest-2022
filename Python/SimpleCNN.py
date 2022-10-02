@@ -104,14 +104,13 @@ for i in range(epochs):
 
     if(b%600==0):
       print(f" Epoch: {i} Batch:{b} Loss:{loss.item()}")
-    
+
   train_losses.append(loss)
   train_crt.append(train_crtc)
 
   with torch.no_grad():
 
-    for b,(X_test,y_test) in enumerate(testloader):
-
+    for X_test, y_test in testloader:
       y_pred=model(X_test)
       predict=torch.max(y_pred.data,1)[1]
       b_crt=(predict==y_test).sum()
