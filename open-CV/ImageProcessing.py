@@ -39,7 +39,7 @@ display('Threshold', thresh)
 
 # Contours
 contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-print("Number of contours = " + str(len(contours)))
+print(f"Number of contours = {len(contours)}")
 print(contours[0])
 
 # Draw all contours

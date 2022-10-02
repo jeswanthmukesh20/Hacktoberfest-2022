@@ -104,16 +104,13 @@ with detection_graph.as_default():
             # calculate center of box if detection exceeds threshold
             if len(objects) > 0 and scores[0][objects][0] > 0.15:
                 b = boxes[0][objects[0]]
-                if not objectX_previous or not objectY_previous:
-                    objectX_previous = (b[1] + b[3]) / 2
-                    objectY_previous = (b[0] + b[2]) / 2
-                else:
+                if objectX_previous and objectY_previous:
                     objectX.value, objectY.value = objectX_previous - ((b[1] + b[3]) / 2), objectY_previous - (
                             (b[0] + b[2]) / 2)
-                    print("x: " + str(int((objectX.value) * x)) + "  y: " + str(-int(objectY.value * y)))
+                    print(f"x: {int(objectX.value * x)}  y: {str(-int(objectY.value * y))}")
                     pyautogui.moveRel(int((objectX.value) * x), -int(objectY.value * y))
-                    objectX_previous = (b[1] + b[3]) / 2
-                    objectY_previous = (b[0] + b[2]) / 2
+                objectX_previous = (b[1] + b[3]) / 2
+                objectY_previous = (b[0] + b[2]) / 2
             else:
                 objectX.value, objectY.value = 0, 0
 

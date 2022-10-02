@@ -105,15 +105,13 @@ class MainWidget(RelativeLayout):
         self.current_speed_x = 0
         self.current_offset_x = 0
         self.tiles_coordinates = []
-        self.score_txt = "SCORE: " + str(self.current_y_loop)
+        self.score_txt = f"SCORE: {self.current_y_loop}"
         self.pre_fill_tiles_coordinates()
         self.generate_tiles_coordinates()
         self.state_game_over = False
 
     def is_desktop(self):
-        if platform in ('linux', 'windows', 'macosx'):
-            return True
-        return False
+        return platform in ('linux', 'windows', 'macosx')
 
     def init_ship(self):
         with self.canvas:
@@ -140,7 +138,7 @@ class MainWidget(RelativeLayout):
         self.ship.points = [x1, y1, x2, y2, x3, y3]
 
     def check_ship_collision(self):
-        for i in range(0, len(self.tiles_coordinates)):
+        for i in range(len(self.tiles_coordinates)):
             ti_x, ti_y = self.tiles_coordinates[i]
             if ti_y > self.current_y_loop + 1:
                 return False
@@ -151,7 +149,7 @@ class MainWidget(RelativeLayout):
     def check_ship_collision_with_tile(self, ti_x, ti_y):
         xmin, ymin = self.get_tile_coordinates(ti_x, ti_y)
         xmax, ymax = self.get_tile_coordinates(ti_x + 1, ti_y + 1)
-        for i in range(0, 3):
+        for i in range(3):
             px, py = self.ship_coordinates[i]
             if xmin <= px <= xmax and ymin <= py <= ymax:
                 return True
@@ -160,11 +158,11 @@ class MainWidget(RelativeLayout):
     def init_tiles(self):
         with self.canvas:
             Color(1, 1, 1)
-            for i in range(0, self.NB_TILES):
+            for _ in range(self.NB_TILES):
                 self.tiles.append(Quad())
 
     def pre_fill_tiles_coordinates(self):
-        for i in range(0, 10):
+        for i in range(10):
             self.tiles_coordinates.append((0, i))
 
     def generate_tiles_coordinates(self):
@@ -184,7 +182,7 @@ class MainWidget(RelativeLayout):
 
         print("foo1")
 
-        for i in range(len(self.tiles_coordinates), self.NB_TILES):
+        for _ in range(len(self.tiles_coordinates), self.NB_TILES):
             r = random.randint(0, 2)
             # 0 -> straight
             # 1 -> right
@@ -202,7 +200,7 @@ class MainWidget(RelativeLayout):
                 self.tiles_coordinates.append((last_x, last_y))
                 last_y += 1
                 self.tiles_coordinates.append((last_x, last_y))
-            if r == 2:
+            elif r == 2:
                 last_x -= 1
                 self.tiles_coordinates.append((last_x, last_y))
                 last_y += 1
@@ -216,20 +214,18 @@ class MainWidget(RelativeLayout):
         with self.canvas:
             Color(1, 1, 1)
             #self.line = Line(points=[100, 0, 100, 100])
-            for i in range(0, self.V_NB_LINES):
+            for _ in range(self.V_NB_LINES):
                 self.vertical_lines.append(Line())
 
     def get_line_x_from_index(self, index):
         central_line_x = self.perspective_point_x
         spacing = self.V_LINES_SPACING * self.width
         offset = index - 0.5
-        line_x = central_line_x + offset*spacing + self.current_offset_x
-        return line_x
+        return central_line_x + offset*spacing + self.current_offset_x
 
     def get_line_y_from_index(self, index):
         spacing_y = self.H_LINES_SPACING*self.height
-        line_y = index*spacing_y-self.current_offset_y
-        return line_y
+        return index*spacing_y-self.current_offset_y
 
     def get_tile_coordinates(self, ti_x, ti_y):
         ti_y = ti_y - self.current_y_loop
@@ -238,7 +234,7 @@ class MainWidget(RelativeLayout):
         return x, y
 
     def update_tiles(self):
-        for i in range(0, self.NB_TILES):
+        for i in range(self.NB_TILES):
             tile = self.tiles[i]
             tile_coordinates = self.tiles_coordinates[i]
             xmin, ymin = self.get_tile_coordinates(tile_coordinates[0], tile_coordinates[1])
@@ -267,7 +263,7 @@ class MainWidget(RelativeLayout):
     def init_horizontal_lines(self):
         with self.canvas:
             Color(1, 1, 1)
-            for i in range(0, self.H_NB_LINES):
+            for _ in range(self.H_NB_LINES):
                 self.horizontal_lines.append(Line())
 
     def update_horizontal_lines(self):
@@ -276,7 +272,7 @@ class MainWidget(RelativeLayout):
 
         xmin = self.get_line_x_from_index(start_index)
         xmax = self.get_line_x_from_index(end_index)
-        for i in range(0, self.H_NB_LINES):
+        for i in range(self.H_NB_LINES):
             line_y = self.get_line_y_from_index(i)
             x1, y1 = self.transform(xmin, line_y)
             x2, y2 = self.transform(xmax, line_y)
@@ -298,9 +294,9 @@ class MainWidget(RelativeLayout):
             while self.current_offset_y >= spacing_y:
                 self.current_offset_y -= spacing_y
                 self.current_y_loop += 1
-                self.score_txt = "SCORE: " + str(self.current_y_loop)
+                self.score_txt = f"SCORE: {self.current_y_loop}"
                 self.generate_tiles_coordinates()
-                print("loop : " + str(self.current_y_loop))
+                print(f"loop : {self.current_y_loop}")
 
             speed_x = self.current_speed_x * self.width / 100
             self.current_offset_x += speed_x * time_factor
